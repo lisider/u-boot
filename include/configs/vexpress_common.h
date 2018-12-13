@@ -248,4 +248,9 @@
 /* Monitor Command Prompt */
 #define CONFIG_SYS_CBSIZE		512	/* Console I/O Buffer Size */
 
+#define CONFIG_IPADDR 192.168.1.141
+#define CONFIG_SERVERIP 192.168.1.143
+#define CONFIG_NETMASK 255.255.255.0
+
+
 #endif /* VEXPRESS_COMMON_H */
