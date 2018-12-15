@@ -3,7 +3,7 @@ CONFIG_TARGET_VEXPRESS_CA9X4=y
 CONFIG_SYS_TEXT_BASE=0x60800000
 CONFIG_DISTRO_DEFAULTS=y
 CONFIG_NR_DRAM_BANKS=2
-CONFIG_BOOTCOMMAND="tftp 0x60004000 uImage;tftp 0x60500000  vexpress-v2p-ca9.dtb;setenv bootargs 'root=/dev/nfs rw nfsroot=192.168.1.143:/home/pop/linux-nfs-run/rootfs init=/linuxrc  ip=192.168.1.141 console=ttyAMA0'; bootm 0x60004000 - 0x60500000; "
+CONFIG_BOOTCOMMAND="tftp 0x60004000 uImage;tftp 0x60500000  vexpress-v2p-ca9.dtb; bootm 0x60004000 - 0x60500000; "
 
 # CONFIG_DISPLAY_CPUINFO is not set
 # CONFIG_DISPLAY_BOARDINFO is not set
