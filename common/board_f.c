@@ -43,6 +43,7 @@
 #include <asm/sections.h>
 #include <dm/root.h>
 #include <linux/errno.h>
+#include <suws_debug.h>
 
 /*
  * Pointer to initial global data area
@@ -985,6 +986,7 @@ static const init_fnc_t init_sequence_f[] = {
 
 void board_init_f(ulong boot_flags)
 {
+	SUWS_PRINT("suws_u-boot bringup init_f +++ %s,%s,%d\n",__FILE__,__func__,__LINE__);
 	gd->flags = boot_flags;
 	gd->have_console = 0;
 
@@ -997,6 +999,7 @@ void board_init_f(ulong boot_flags)
 	/* NOTREACHED - jump_to_copy() does not return */
 	hang();
 #endif
+	SUWS_PRINT("suws_u-boot bringup init_f --- %s,%s,%d\n",__FILE__,__func__,__LINE__);
 }
 
 #if defined(CONFIG_X86) || defined(CONFIG_ARC)

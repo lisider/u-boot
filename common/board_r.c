@@ -48,6 +48,7 @@
 #include <linux/compiler.h>
 #include <linux/err.h>
 #include <efi_loader.h>
+#include <suws_debug.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -838,6 +839,7 @@ void board_init_r(gd_t *new_gd, ulong dest_addr)
 	 * TODO(sjg@chromium.org): Consider doing this for all archs, or
 	 * dropping the new_gd parameter.
 	 */
+	SUWS_PRINT("suws_u-boot bringup init_r +++ %s,%s,%d\n",__FILE__,__func__,__LINE__);
 #if CONFIG_IS_ENABLED(X86_64)
 	arch_setup_gd(new_gd);
 #endif
@@ -858,6 +860,7 @@ void board_init_r(gd_t *new_gd, ulong dest_addr)
 
 	if (initcall_run_list(init_sequence_r))
 		hang();
+	SUWS_PRINT("suws_u-boot bringup init_r --- %s,%s,%d\n",__FILE__,__func__,__LINE__);
 
 	/* NOTREACHED - run_main_loop() does not return */
 	hang();
