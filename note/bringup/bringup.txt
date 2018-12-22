@@ -1,0 +1,30 @@
+
+#### 启动流
+
+1.
+./arch/arm/cpu/armv7/start.S
+	_start // 入口函数
+		_main
+	_main  // 出口函数
+
+
+2.
+arch/arm/lib/crt0.S
+	_main
+		board_init_f // u-boot/common/board_f.c
+		board_init_r // u-boot/common/board_r.c
+	board_init_r
+
+
+3.
+common/board_r.c
+	board_init_r
+		run_main_loop
+			main_loop
+	main_loop
+
+
+4.
+common/main.c
+	main_loop
+	无出口函数
