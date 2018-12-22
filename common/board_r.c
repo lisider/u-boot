@@ -840,6 +840,13 @@ void board_init_r(gd_t *new_gd, ulong dest_addr)
 	 * dropping the new_gd parameter.
 	 */
 	SUWS_PRINT("suws_u-boot bringup init_r +++ %s,%s,%d\n",__FILE__,__func__,__LINE__);
+	int num = 1;
+	init_fnc_t * tmp;
+
+	for(num = 1;num<sizeof(init_sequence_r)/sizeof(init_fnc_t)+1;num++){
+		tmp = init_sequence_r + num - 1;
+		SUWS_PRINT("init_r : %2d : %p 0x %x\n",num,tmp,(int)*tmp - 0x1F76A000); // 将 0x 后面的 打印信息 与 System.map 比较,此时不一定能找到,因为 涉及到搬运 relocate_code ??? 实际打印 的 比 system 中的 大 1F76A000 , 一定是这么 多吗? 不清楚
+	}
 #if CONFIG_IS_ENABLED(X86_64)
 	arch_setup_gd(new_gd);
 #endif

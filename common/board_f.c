@@ -993,6 +993,15 @@ void board_init_f(ulong boot_flags)
 	if (initcall_run_list(init_sequence_f))
 		hang();
 
+	int num = 1;
+	init_fnc_t * tmp;
+
+	for(num = 1;num<sizeof(init_sequence_f)/sizeof(init_fnc_t)+1;num++){
+		tmp = init_sequence_f + num - 1;
+		SUWS_PRINT("init_f : %2d : %p 0x %x\n",num,tmp,(int)*tmp); // 将 0x 后面的 打印信息 与 System.map 比较,就会得出 执行的参数
+	}
+
+
 #if !defined(CONFIG_ARM) && !defined(CONFIG_SANDBOX) && \
 		!defined(CONFIG_EFI_APP) && !CONFIG_IS_ENABLED(X86_64) && \
 		!defined(CONFIG_ARC)
