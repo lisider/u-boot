@@ -697,10 +697,12 @@ int sdhci_setup_cfg(struct mmc_config *cfg, struct sdhci_host *host,
 #if CONFIG_IS_ENABLED(DM_MMC)
 	u64 dt_caps, dt_caps_mask;
 
-	dt_caps_mask = dev_read_u64_default(host->mmc->dev,
-					    "sdhci-caps-mask", 0);
-	dt_caps = dev_read_u64_default(host->mmc->dev,
-				       "sdhci-caps", 0);
+	//dt_caps_mask = dev_read_u64_default(host->mmc->dev,
+	//				    "sdhci-caps-mask", 0);
+	dt_caps_mask = 0;
+	//dt_caps = dev_read_u64_default(host->mmc->dev,
+	//			       "sdhci-caps", 0);
+	dt_caps = 0;
 	caps = ~lower_32_bits(dt_caps_mask) &
 	       sdhci_readl(host, SDHCI_CAPABILITIES);
 	caps |= lower_32_bits(dt_caps);

@@ -50,7 +50,7 @@ static void gpio_desc_init(struct gpio_desc *desc,
  * @desc:	Returns description (desc->flags will always be 0)
  * @return 0 if found, -ENOENT if not found
  */
-static int gpio_to_device(unsigned int gpio, struct gpio_desc *desc)
+int gpio_to_device(unsigned int gpio, struct gpio_desc *desc)
 {
 	struct gpio_dev_priv *uc_priv;
 	struct udevice *dev;

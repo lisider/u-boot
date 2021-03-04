@@ -1,0 +1,528 @@
+/*
+ * (C) Copyright 2003
+ * David Müller ELSOFT AG Switzerland. d.mueller@elsoft.ch
+ *
+ * See file CREDITS for list of people who contributed to this
+ * project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
+
+/************************************************
+ * NAME	    : S3C64XX.h
+ * Version  : 31.3.2003
+ *
+ * common stuff for SAMSUNG S3C64XX SoC
+ ************************************************/
+
+#ifndef __S3C64XX_H__
+#define __S3C64XX_H__
+
+#include "types.h"
+/* Memory controller (see manual chapter 5) */
+typedef struct {
+	S3C64XX_REG32	BWSCON;
+	S3C64XX_REG32	BANKCON[8];
+	S3C64XX_REG32	REFRESH;
+	S3C64XX_REG32	BANKSIZE;
+	S3C64XX_REG32	MRSRB6;
+	S3C64XX_REG32	MRSRB7;
+} /*__attribute__((__packed__))*/ S3C64XX_MEMCTL;
+
+
+/* USB HOST (see manual chapter 12) */
+typedef struct {
+	S3C64XX_REG32	HcRevision;
+	S3C64XX_REG32	HcControl;
+	S3C64XX_REG32	HcCommonStatus;
+	S3C64XX_REG32	HcInterruptStatus;
+	S3C64XX_REG32	HcInterruptEnable;
+	S3C64XX_REG32	HcInterruptDisable;
+	S3C64XX_REG32	HcHCCA;
+	S3C64XX_REG32	HcPeriodCuttendED;
+	S3C64XX_REG32	HcControlHeadED;
+	S3C64XX_REG32	HcControlCurrentED;
+	S3C64XX_REG32	HcBulkHeadED;
+	S3C64XX_REG32	HcBuldCurrentED;
+	S3C64XX_REG32	HcDoneHead;
+	S3C64XX_REG32	HcRmInterval;
+	S3C64XX_REG32	HcFmRemaining;
+	S3C64XX_REG32	HcFmNumber;
+	S3C64XX_REG32	HcPeriodicStart;
+	S3C64XX_REG32	HcLSThreshold;
+	S3C64XX_REG32	HcRhDescriptorA;
+	S3C64XX_REG32	HcRhDescriptorB;
+	S3C64XX_REG32	HcRhStatus;
+	S3C64XX_REG32	HcRhPortStatus1;
+	S3C64XX_REG32	HcRhPortStatus2;
+} /*__attribute__((__packed__))*/ S3C64XX_USB_HOST;
+
+
+/* INTERRUPT (see manual chapter 14) */
+typedef struct {
+	S3C64XX_REG32	SRCPND;
+	S3C64XX_REG32	INTMOD;
+	S3C64XX_REG32	INTMSK;
+	S3C64XX_REG32	PRIORITY;
+	S3C64XX_REG32	INTPND;
+	S3C64XX_REG32	INTOFFSET;
+#ifdef CONFIG_S3C2410
+	S3C64XX_REG32	SUBSRCPND;
+	S3C64XX_REG32	INTSUBMSK;
+#endif
+} /*__attribute__((__packed__))*/ S3C64XX_INTERRUPT;
+
+/* LCD CONTROLLER (see manual chapter 15) */
+typedef struct
+{
+	S3C64XX_REG32	VIDOSDA;
+	S3C64XX_REG32	VIDOSDB;
+	S3C64XX_REG32	VIDOSDC;
+	S3C64XX_REG32	VIDOSDD;
+}video_ctrl;
+
+typedef struct {
+	S3C64XX_REG32 VIDCON[3];//offset - 0x0000
+	S3C64XX_REG32 dummy0;
+	S3C64XX_REG32 VIDTCON[3];//offset - 0x0010
+	S3C64XX_REG32 dummy1;
+	S3C64XX_REG32 WINCON[5];//offset - 0x0020
+	S3C64XX_REG32 dummy2[3];
+	video_ctrl	  window[5];//[5]:window index;offset - 0x0040
+	S3C64XX_REG32 dummy3[4];
+	S3C64XX_REG32 VIDWxADD0[5][2];//[5]:window index;offset - 0x00A0
+	S3C64XX_REG32 dummy4[2];
+	S3C64XX_REG32 VIDWxADD1[5][2];//[5]:window index;offset - 0x00D0
+	S3C64XX_REG32 dummy5[2];
+	S3C64XX_REG32 VIDWxADD2[5];	//[5]:window index;offset - 0x0100
+	S3C64XX_REG32 dummy0_[7];
+	S3C64XX_REG32 VIDINTCON[2];//offset - 0x0130
+	S3C64XX_REG32 dummy1_[2];
+	S3C64XX_REG32 WxKEYCON[4][2];//[4]:window index [2]:CON index
+	S3C64XX_REG32 dummy2_[4];
+	S3C64XX_REG32 DITHMODE;//offset - 0x0170
+	S3C64XX_REG32 dummy3_[3];
+	S3C64XX_REG32 WINxMAP[5];//[5]:window index;offset - 0x0180
+	S3C64XX_REG32 dummy4_[3];
+	S3C64XX_REG32 WPALCON;//offset - 0x01A0
+	S3C64XX_REG32 TRIGCON;
+	S3C64XX_REG32 ITUIFCON0;
+	S3C64XX_REG32 dummy5_;
+	S3C64XX_REG32 I80IFCONA[2];//offset - 0x01B0
+	S3C64XX_REG32 I80IFCONB[2];
+	S3C64XX_REG32 dummy6_[4];//offset - 0x01C0
+	S3C64XX_REG32 LDI_CMDCON[2];//offset - 0x01D0
+	S3C64XX_REG32 dummy7_[2];
+	S3C64XX_REG32 SIFCCON[3];//offset - 0x01E0
+	S3C64XX_REG32 dummy8_[37];
+	S3C64XX_REG32 LDI_CMD[12];//offset - 0x0280
+	S3C64XX_REG32 dummy9_[20];
+	S3C64XX_REG32 W2PDATA01;//offset - 0x0300
+	S3C64XX_REG32 W2PDATA23;
+	S3C64XX_REG32 W2PDATA45;
+	S3C64XX_REG32 W2PDATA67;
+	S3C64XX_REG32 W2PDATA89;//offset - 0x0310
+	S3C64XX_REG32 W2PDATAAB;
+	S3C64XX_REG32 W2PDATACD;
+	S3C64XX_REG32 W2PDATAEF;
+	S3C64XX_REG32 W3PDATA01;//offset - 0x0320
+	S3C64XX_REG32 W3PDATA23;
+	S3C64XX_REG32 W3PDATA45;
+	S3C64XX_REG32 W3PDATA67;
+	S3C64XX_REG32 W3PDATA89;//offset - 0x0330
+	S3C64XX_REG32 W3PDATAAB;
+	S3C64XX_REG32 W3PDATACD;
+	S3C64XX_REG32 W3PDATAEF;
+	S3C64XX_REG32 W4PDATA01;//offset - 0x0340
+	S3C64XX_REG32 W4PDATA23;
+} /*__attribute__((__packed__))*/ S3C64XX_LCD;
+
+/* NAND FLASH (see S3C2410 manual chapter 6) */
+typedef struct {
+	S3C64XX_REG32	NFCONF;
+	S3C64XX_REG32	NFCMD;
+	S3C64XX_REG32	NFADDR;
+	S3C64XX_REG32	NFDATA;
+	S3C64XX_REG32	NFSTAT;
+	S3C64XX_REG32	NFECC;
+} /*__attribute__((__packed__))*/ S3C2410_NAND;
+
+/* PWM TIMER (see manual chapter 10) */
+typedef struct {
+	S3C64XX_REG32	TCNTB;
+	S3C64XX_REG32	TCMPB;
+	S3C64XX_REG32	TCNTO;
+} /*__attribute__((__packed__))*/ S3C64XX_TIMER;
+
+typedef struct {
+	S3C64XX_REG32	TCFG0;
+	S3C64XX_REG32	TCFG1;
+	S3C64XX_REG32	TCON;
+	S3C64XX_TIMER	ch[4];
+	S3C64XX_REG32	TCNTB4;
+	S3C64XX_REG32	TCNTO4;
+} /*__attribute__((__packed__))*/ S3C64XX_TIMERS;
+
+
+/* USB DEVICE (see manual chapter 13) */
+typedef struct {
+#ifdef __BIG_ENDIAN
+	S3C64XX_REG8	res[3];
+	S3C64XX_REG8	EP_FIFO_REG;
+#else /*  little endian */
+	S3C64XX_REG8	EP_FIFO_REG;
+	S3C64XX_REG8	res[3];
+#endif
+} /*__attribute__((__packed__))*/ S3C64XX_USB_DEV_FIFOS;
+
+typedef struct {
+#ifdef __BIG_ENDIAN
+	S3C64XX_REG8	res1[3];
+	S3C64XX_REG8	EP_DMA_CON;
+	S3C64XX_REG8	res2[3];
+	S3C64XX_REG8	EP_DMA_UNIT;
+	S3C64XX_REG8	res3[3];
+	S3C64XX_REG8	EP_DMA_FIFO;
+	S3C64XX_REG8	res4[3];
+	S3C64XX_REG8	EP_DMA_TTC_L;
+	S3C64XX_REG8	res5[3];
+	S3C64XX_REG8	EP_DMA_TTC_M;
+	S3C64XX_REG8	res6[3];
+	S3C64XX_REG8	EP_DMA_TTC_H;
+#else /*  little endian */
+	S3C64XX_REG8	EP_DMA_CON;
+	S3C64XX_REG8	res1[3];
+	S3C64XX_REG8	EP_DMA_UNIT;
+	S3C64XX_REG8	res2[3];
+	S3C64XX_REG8	EP_DMA_FIFO;
+	S3C64XX_REG8	res3[3];
+	S3C64XX_REG8	EP_DMA_TTC_L;
+	S3C64XX_REG8	res4[3];
+	S3C64XX_REG8	EP_DMA_TTC_M;
+	S3C64XX_REG8	res5[3];
+	S3C64XX_REG8	EP_DMA_TTC_H;
+	S3C64XX_REG8	res6[3];
+#endif
+} /*__attribute__((__packed__))*/ S3C64XX_USB_DEV_DMAS;
+
+typedef struct {
+#ifdef __BIG_ENDIAN
+	S3C64XX_REG8	res1[3];
+	S3C64XX_REG8	FUNC_ADDR_REG;
+	S3C64XX_REG8	res2[3];
+	S3C64XX_REG8	PWR_REG;
+	S3C64XX_REG8	res3[3];
+	S3C64XX_REG8	EP_INT_REG;
+	S3C64XX_REG8	res4[15];
+	S3C64XX_REG8	USB_INT_REG;
+	S3C64XX_REG8	res5[3];
+	S3C64XX_REG8	EP_INT_EN_REG;
+	S3C64XX_REG8	res6[15];
+	S3C64XX_REG8	USB_INT_EN_REG;
+	S3C64XX_REG8	res7[3];
+	S3C64XX_REG8	FRAME_NUM1_REG;
+	S3C64XX_REG8	res8[3];
+	S3C64XX_REG8	FRAME_NUM2_REG;
+	S3C64XX_REG8	res9[3];
+	S3C64XX_REG8	INDEX_REG;
+	S3C64XX_REG8	res10[7];
+	S3C64XX_REG8	MAXP_REG;
+	S3C64XX_REG8	res11[3];
+	S3C64XX_REG8	EP0_CSR_IN_CSR1_REG;
+	S3C64XX_REG8	res12[3];
+	S3C64XX_REG8	IN_CSR2_REG;
+	S3C64XX_REG8	res13[7];
+	S3C64XX_REG8	OUT_CSR1_REG;
+	S3C64XX_REG8	res14[3];
+	S3C64XX_REG8	OUT_CSR2_REG;
+	S3C64XX_REG8	res15[3];
+	S3C64XX_REG8	OUT_FIFO_CNT1_REG;
+	S3C64XX_REG8	res16[3];
+	S3C64XX_REG8	OUT_FIFO_CNT2_REG;
+#else /*  little endian */
+	S3C64XX_REG8	FUNC_ADDR_REG;
+	S3C64XX_REG8	res1[3];
+	S3C64XX_REG8	PWR_REG;
+	S3C64XX_REG8	res2[3];
+	S3C64XX_REG8	EP_INT_REG;
+	S3C64XX_REG8	res3[15];
+	S3C64XX_REG8	USB_INT_REG;
+	S3C64XX_REG8	res4[3];
+	S3C64XX_REG8	EP_INT_EN_REG;
+	S3C64XX_REG8	res5[15];
+	S3C64XX_REG8	USB_INT_EN_REG;
+	S3C64XX_REG8	res6[3];
+	S3C64XX_REG8	FRAME_NUM1_REG;
+	S3C64XX_REG8	res7[3];
+	S3C64XX_REG8	FRAME_NUM2_REG;
+	S3C64XX_REG8	res8[3];
+	S3C64XX_REG8	INDEX_REG;
+	S3C64XX_REG8	res9[7];
+	S3C64XX_REG8	MAXP_REG;
+	S3C64XX_REG8	res10[7];
+	S3C64XX_REG8	EP0_CSR_IN_CSR1_REG;
+	S3C64XX_REG8	res11[3];
+	S3C64XX_REG8	IN_CSR2_REG;
+	S3C64XX_REG8	res12[3];
+	S3C64XX_REG8	OUT_CSR1_REG;
+	S3C64XX_REG8	res13[7];
+	S3C64XX_REG8	OUT_CSR2_REG;
+	S3C64XX_REG8	res14[3];
+	S3C64XX_REG8	OUT_FIFO_CNT1_REG;
+	S3C64XX_REG8	res15[3];
+	S3C64XX_REG8	OUT_FIFO_CNT2_REG;
+	S3C64XX_REG8	res16[3];
+#endif /*  __BIG_ENDIAN */
+	S3C64XX_USB_DEV_FIFOS	fifo[5];
+	S3C64XX_USB_DEV_DMAS	dma[5];
+} /*__attribute__((__packed__))*/ S3C64XX_USB_DEVICE;
+
+
+/* WATCH DOG TIMER (see manual chapter 18) */
+typedef struct {
+	S3C64XX_REG32	WTCON;
+	S3C64XX_REG32	WTDAT;
+	S3C64XX_REG32	WTCNT;
+} /*__attribute__((__packed__))*/ S3C64XX_WATCHDOG;
+
+
+/* IIC (see manual chapter 20) */
+typedef struct {
+	S3C64XX_REG32	IICCON;
+	S3C64XX_REG32	IICSTAT;
+	S3C64XX_REG32	IICADD;
+	S3C64XX_REG32	IICDS;
+} /*__attribute__((__packed__))*/ S3C64XX_I2C;
+
+
+/* IIS (see manual chapter 21) */
+typedef struct {
+#ifdef __BIG_ENDIAN
+	S3C64XX_REG16	res1;
+	S3C64XX_REG16	IISCON;
+	S3C64XX_REG16	res2;
+	S3C64XX_REG16	IISMOD;
+	S3C64XX_REG16	res3;
+	S3C64XX_REG16	IISPSR;
+	S3C64XX_REG16	res4;
+	S3C64XX_REG16	IISFCON;
+	S3C64XX_REG16	res5;
+	S3C64XX_REG16	IISFIFO;
+#else /*  little endian */
+	S3C64XX_REG16	IISCON;
+	S3C64XX_REG16	res1;
+	S3C64XX_REG16	IISMOD;
+	S3C64XX_REG16	res2;
+	S3C64XX_REG16	IISPSR;
+	S3C64XX_REG16	res3;
+	S3C64XX_REG16	IISFCON;
+	S3C64XX_REG16	res4;
+	S3C64XX_REG16	IISFIFO;
+	S3C64XX_REG16	res5;
+#endif
+} /*__attribute__((__packed__))*/ S3C64XX_I2S;
+
+/* RTC (see manual chapter 17) */
+typedef struct {
+#ifdef __BIG_ENDIAN
+	S3C64XX_REG8	res1[67];
+	S3C64XX_REG8	RTCCON;
+	S3C64XX_REG8	res2[3];
+	S3C64XX_REG8	TICNT;
+	S3C64XX_REG8	res3[11];
+	S3C64XX_REG8	RTCALM;
+	S3C64XX_REG8	res4[3];
+	S3C64XX_REG8	ALMSEC;
+	S3C64XX_REG8	res5[3];
+	S3C64XX_REG8	ALMMIN;
+	S3C64XX_REG8	res6[3];
+	S3C64XX_REG8	ALMHOUR;
+	S3C64XX_REG8	res7[3];
+	S3C64XX_REG8	ALMDATE;
+	S3C64XX_REG8	res8[3];
+	S3C64XX_REG8	ALMMON;
+	S3C64XX_REG8	res9[3];
+	S3C64XX_REG8	ALMYEAR;
+	S3C64XX_REG8	res10[3];
+	S3C64XX_REG8	RTCRST;
+	S3C64XX_REG8	res11[3];
+	S3C64XX_REG8	BCDSEC;
+	S3C64XX_REG8	res12[3];
+	S3C64XX_REG8	BCDMIN;
+	S3C64XX_REG8	res13[3];
+	S3C64XX_REG8	BCDHOUR;
+	S3C64XX_REG8	res14[3];
+	S3C64XX_REG8	BCDDATE;
+	S3C64XX_REG8	res15[3];
+	S3C64XX_REG8	BCDDAY;
+	S3C64XX_REG8	res16[3];
+	S3C64XX_REG8	BCDMON;
+	S3C64XX_REG8	res17[3];
+	S3C64XX_REG8	BCDYEAR;
+#else /*  little endian */
+	S3C64XX_REG8	res0[64];
+	S3C64XX_REG8	RTCCON;
+	S3C64XX_REG8	res1[3];
+	S3C64XX_REG8	TICNT;
+	S3C64XX_REG8	res2[11];
+	S3C64XX_REG8	RTCALM;
+	S3C64XX_REG8	res3[3];
+	S3C64XX_REG8	ALMSEC;
+	S3C64XX_REG8	res4[3];
+	S3C64XX_REG8	ALMMIN;
+	S3C64XX_REG8	res5[3];
+	S3C64XX_REG8	ALMHOUR;
+	S3C64XX_REG8	res6[3];
+	S3C64XX_REG8	ALMDATE;
+	S3C64XX_REG8	res7[3];
+	S3C64XX_REG8	ALMMON;
+	S3C64XX_REG8	res8[3];
+	S3C64XX_REG8	ALMYEAR;
+	S3C64XX_REG8	res9[3];
+	S3C64XX_REG8	RTCRST;
+	S3C64XX_REG8	res10[3];
+	S3C64XX_REG8	BCDSEC;
+	S3C64XX_REG8	res11[3];
+	S3C64XX_REG8	BCDMIN;
+	S3C64XX_REG8	res12[3];
+	S3C64XX_REG8	BCDHOUR;
+	S3C64XX_REG8	res13[3];
+	S3C64XX_REG8	BCDDATE;
+	S3C64XX_REG8	res14[3];
+	S3C64XX_REG8	BCDDAY;
+	S3C64XX_REG8	res15[3];
+	S3C64XX_REG8	BCDMON;
+	S3C64XX_REG8	res16[3];
+	S3C64XX_REG8	BCDYEAR;
+	S3C64XX_REG8	res17[3];
+#endif
+} /*__attribute__((__packed__))*/ S3C64XX_RTC;
+
+
+/* ADC (see manual chapter 16) */
+typedef struct {
+	S3C64XX_REG32	ADCCON;
+	S3C64XX_REG32	ADCDAT;
+} /*__attribute__((__packed__))*/ S3C2400_ADC;
+
+
+/* ADC (see manual chapter 16) */
+typedef struct {
+	S3C64XX_REG32	ADCCON;
+	S3C64XX_REG32	ADCTSC;
+	S3C64XX_REG32	ADCDLY;
+	S3C64XX_REG32	ADCDAT0;
+	S3C64XX_REG32	ADCDAT1;
+} /*__attribute__((__packed__))*/ S3C2410_ADC;
+
+
+/* SPI (see manual chapter 22) */
+typedef struct {
+	S3C64XX_REG32	SPCON;
+	S3C64XX_REG32	SPSTA;
+	S3C64XX_REG32	SPPIN;
+	S3C64XX_REG32	SPPRE;
+	S3C64XX_REG32	SPTDAT;
+	S3C64XX_REG32	SPRDAT;
+	S3C64XX_REG32	res[2];
+} __attribute__((__packed__)) S3C64XX_SPI_CHANNEL;
+
+typedef struct {
+	S3C64XX_SPI_CHANNEL	ch[S3C64XX_SPI_CHANNELS];
+} /*__attribute__((__packed__))*/ S3C64XX_SPI;
+
+/*
+ * Modem interface
+ */
+typedef  struct
+{
+	S3C64XX_REG32	INT2AP;
+	S3C64XX_REG32	INT2MODEM;
+	S3C64XX_REG32	MIFCON;
+	S3C64XX_REG32	MIFPCON;
+	S3C64XX_REG32	MODEMINTCLR;
+} S3C64XX_MODEM;
+
+static inline S3C64XX_MEMCTL * S3C64XX_GetBase_MEMCTL(void)
+{
+	return (S3C64XX_MEMCTL *)(ELFIN_DMC0_BASE);
+}
+static inline S3C64XX_USB_HOST * S3C64XX_GetBase_USB_HOST(void)
+{
+	return (S3C64XX_USB_HOST *)ELFIN_USB_HOST_BASE;
+}
+static inline S3C64XX_INTERRUPT * S3C64XX_GetBase_INTERRUPT(void)
+{
+	return (S3C64XX_INTERRUPT *)ELFIN_VIC0_BASE_ADDR;
+}
+static inline S3C64XX_LCD * S3C64XX_GetBase_LCD(void)
+{
+	return (S3C64XX_LCD *)ELFIN_LCD_BASE;
+}
+/*
+static inline S3C2410_NAND * S3C2410_GetBase_NAND(void)
+{
+	return (S3C2410_NAND *)ELFIN_NAND_BASE;
+}
+*/
+static inline S3C64XX_TIMERS * S3C64XX_GetBase_TIMERS(void)
+{
+	return (S3C64XX_TIMERS *)ELFIN_TIMER_BASE;
+}
+/*
+static inline S3C64XX_USB_DEVICE * S3C64XX_GetBase_USB_DEVICE(void)
+{
+	return (S3C64XX_USB_DEVICE *)ELFIN_USB_DEVICE_BASE;
+}
+*/
+static inline S3C64XX_WATCHDOG * S3C64XX_GetBase_WATCHDOG(void)
+{
+	return (S3C64XX_WATCHDOG *)ELFIN_WATCHDOG_BASE;
+}
+static inline S3C64XX_I2C * S3C64XX_GetBase_I2C(void)
+{
+	return (S3C64XX_I2C *)ELFIN_I2C_BASE;
+}
+static inline S3C64XX_I2S * S3C64XX_GetBase_I2S(void)
+{
+	return (S3C64XX_I2S *)ELFIN_I2S_BASE;
+}
+static inline S3C64XX_RTC * S3C64XX_GetBase_RTC(void)
+{
+	return (S3C64XX_RTC *)ELFIN_RTC_BASE;
+}
+static inline S3C2410_ADC * S3C2410_GetBase_ADC(void)
+{
+	return (S3C2410_ADC *)ELFIN_ADC_BASE;
+}
+static inline S3C64XX_SPI * S3C64XX_GetBase_SPI(void)
+{
+	return (S3C64XX_SPI *)ELFIN_SPI_BASE;
+}
+
+static inline S3C64XX_MODEM * S3C64XX_GetBase_MODEM(void)
+{
+	return (S3C64XX_MODEM *)ELFIN_MODEM_BASE;
+}
+
+#if 0
+static inline S3C2410_SDI * S3C2410_GetBase_SDI(void)
+{
+	return (S3C2410_SDI *)ELFIN_SDI_BASE;
+}
+#endif
+
+#endif /*__S3C64XX_H__*/

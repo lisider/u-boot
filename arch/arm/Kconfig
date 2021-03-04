@@ -750,6 +750,16 @@ config ARCH_S5PC1XX
 	select DM_SERIAL
 	imply CMD_DM
 
+config ARCH_S3C64XX
+	bool "Samsung S3C64XX"
+	select CPU_ARM1176
+	select DM
+	select DM_GPIO
+	select DM_I2C
+	select DM_SERIAL
+	select SPL_BOARD_INIT if SPL
+	imply CMD_DM
+
 config ARCH_HIGHBANK
 	bool "Calxeda Highbank"
 	select CPU_V7A
@@ -1932,6 +1942,8 @@ source "arch/arm/mach-qemu/Kconfig"
 source "arch/arm/mach-rockchip/Kconfig"
 
 source "arch/arm/mach-s5pc1xx/Kconfig"
+
+source "arch/arm/mach-s3c64xx/Kconfig"
 
 source "arch/arm/mach-snapdragon/Kconfig"
 

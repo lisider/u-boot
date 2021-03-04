@@ -1,0 +1,6 @@
+SMDK6410 BOARD
+M:	Chander Kashyap <k.chander@samsung.com>
+S:	Maintained
+F:	board/samsung/smdk6410/
+F:	include/configs/smdk6410.h
+F:	configs/smdk6410_defconfig

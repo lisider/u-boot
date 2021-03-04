@@ -44,6 +44,19 @@ config SPL_DM_MMC
 	  appear as block devices in U-Boot and can support filesystems such
 	  as EXT4 and FAT.
 
+config MMC_BOOT
+	bool "boot SOC from SD/MMC"
+	depends on MMC
+	help
+	  This enables SOC to load bl2 code from SD/MMC device in start.S 
+
+config SPL_MMC_BOOT
+	bool "boot SOC from SD/MMC in SPL"
+	depends on SPL 
+	default y
+	help
+	  This enables SOC to load bl2 code from SD/MMC device in start.S 
+
 if MMC
 
 config MMC_SDHCI_ADMA_HELPERS
@@ -594,6 +607,17 @@ config MMC_SDHCI_S5P
 	help
 	  This selects the Secure Digital Host Controller Interface (SDHCI)
 	  on Samsung S5P SoCs.
+
+	  If you have a controller with this interface, say Y here.
+
+	  If unsure, say N.
+
+config MMC_SDHCI_S3C64XX
+	bool "SDHCI support on Samsung S3C64XX SoC"
+	depends on MMC_SDHCI
+	help
+	  This selects the Secure Digital Host Controller Interface (SDHCI)
+	  on Samsung S3C64XX SoCs.
 
 	  If you have a controller with this interface, say Y here.
 

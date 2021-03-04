@@ -1,0 +1,15 @@
+if ARCH_S3C64XX 
+
+config TARGET_OK6410A
+	default y
+	bool "Support ok6410a board"
+	select OF_CONTROL
+	select SUPPORT_SPL
+
+config S3C64XX
+	default y
+	bool "Support S3C64XX platform feature"
+
+source "board/samsung/ok6410a/Kconfig"
+
+endif

@@ -1,0 +1,103 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Samsung's Exynos4210-based SMDKV310 board device tree source
+ *
+ * Copyright (c) 2014 Google, Inc
+ */
+
+/dts-v1/;
+
+#include "skeleton.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include "s3c6410-pinctrl.dtsi"
+#include <asm/arch/clk.h>
+#include <asm/arch/movi.h>
+
+/ {
+	model = "Samsung SMDK6410 based on S3C6410";
+	compatible = "samsung,smdk6410", "samsung,s3c6410";
+
+	aliases {
+		serial0 = "/serial0@7F005000";
+		console = "/serial0@7F005000";
+		pinctrl0 = &pinctrl0;
+		mmc0 = &sdhci0;
+	};
+
+	config {
+		bootdelay = <5>;
+		u-boot,mmc-env-offset = <MMC_ENV_OFFSET>;      /* @  -25KB */
+	};
+
+	gic: interrupt-controller@10490000 {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <3>;
+		interrupt-controller;
+		cpu-offset = <0x4000>;
+		reg = <0x10490000 0x10000>, <0x10480000 0x10000>;
+	};
+
+	clkc: clock@1800000 {
+		u-boot,dm-pre-reloc;
+		compatible = "samsung,s3c6410-clk";
+		reg = <0x7E00F000 0x1000>;
+		#address-cells = <0x1>;
+		#size-cells = <0x0>;
+		#clock-cells = <1>;
+	};
+
+	pinctrl0: pinctrl@7f008000 {
+		compatible = "samsung,s3c6410-pinctrl";
+		reg = <0x7f008000 0x1000>;
+	};
+
+	serial0@7F005000 {
+		compatible = "samsung,ok6410-uart";
+		reg = <0x7F005000 0x400>;
+		interrupt-parent = <&gic>;
+		interrupts = <0 37 0>;
+		id = <0>;
+	};
+
+	sdhci0: sdhci@7C200000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "samsung,s3c6410-sdhci";
+		reg = <0x7C200000 0x100>;
+		clocks = <&clkc CLK_ID_SCLK_MMC0>;
+		clock-names = "sclk_mmc0", "hclk_mmc0";
+		assigned-clocks = <&clkc CLK_ID_SCLK_MMC0>; 
+		assigned-clock-parents = <&clkc CLK_ID_MOUT_EPLL>;
+		interrupt-parent = <&gic>;
+		interrupts = <0 56 0>;
+		samsung,bus-width = <4>;
+		cd-gpios = <&gpg 6 GPIO_ACTIVE_LOW>;
+		status = "okay";
+	};
+
+	sdhci1: sdhci@7C300000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "samsung,s3c6410-sdhci";
+		reg = <0x7C300000 0x100>;
+		clocks = <&clkc CLK_ID_SCLK_MMC1>; 
+		clock-names = "sclk_mmc1_48m";
+		interrupt-parent = <&gic>;
+		interrupts = <0 57 0>;
+		cd-gpios = <&gpg 6 GPIO_ACTIVE_LOW>;
+		status = "disabled";
+	};
+
+	sdhci2: sdhci@7C400000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "samsung,s3c6410-sdhci";
+		reg = <0x7C400000 0x100>;
+		clocks = <&clkc CLK_ID_SCLK_MMC2>;
+		clock-names = "sclk_mmc2_48m";
+		interrupt-parent = <&gic>;
+		interrupts = <0 49 0>;
+		status = "disabled";
+	};
+
+};

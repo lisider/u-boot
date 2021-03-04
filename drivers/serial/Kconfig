@@ -262,6 +262,13 @@ config DEBUG_UART_S5P
 	  will need to provide parameters to make this work. The driver will
 	  be available until the real driver-model serial is running.
 
+config DEBUG_UART_S3C
+	bool "Samsung S3C64XX Uart debug"
+	help
+	  Select this to enable a debug UART using the serial_s3c driver. You
+	  will need to provide parameters to make this work. The driver will
+	  be available until the real driver-model serial is running.
+
 config DEBUG_UART_MESON
 	bool "Amlogic Meson"
 	depends on MESON_SERIAL

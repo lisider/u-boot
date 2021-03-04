@@ -1,0 +1,15 @@
+if TARGET_OK6410A
+
+config SYS_BOARD
+	default "ok6410a"
+
+config SYS_VENDOR
+	default "samsung"
+
+config SYS_SOC
+	default "s3c64xx"
+
+config SYS_CONFIG_NAME
+	default "ok6410a"
+
+endif

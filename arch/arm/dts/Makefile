@@ -152,6 +152,9 @@ dtb-$(CONFIG_ROCKCHIP_RV1108) += \
 dtb-$(CONFIG_ARCH_S5P4418) += \
 	s5p4418-nanopi2.dtb
 
+dtb-$(CONFIG_ARCH_S3C64XX) += \
+	s3c64xx-ok6410a.dtb
+
 dtb-$(CONFIG_ARCH_MESON) += \
 	meson-gxbb-nanopi-k2.dtb \
 	meson-gxbb-odroidc2.dtb \
