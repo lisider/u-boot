@@ -45,9 +45,9 @@ CONFIG_CLK=y
 
 #
 # lcd support
-# CONFIG_LCD is not set
-# CONFIG_SYS_WHITE_ON_BLACK is not set
-# CONFIG_LCD_S3CFB is not set
+CONFIG_LCD=y
+CONFIG_SYS_WHITE_ON_BLACK=y
+CONFIG_LCD_S3CFB=y
 # CONFIG_S3C_LCD_LOGO is not set
 # CONFIG_CONSOLE_SCROLL_LINES is not set
 

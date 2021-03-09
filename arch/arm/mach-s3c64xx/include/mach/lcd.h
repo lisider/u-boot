@@ -1,35 +1,35 @@
 #ifndef __S3CFB_LCD_H__
 #define __S3CFB_LCD_H__
 
-#ifndef LCD_COLOR16
-#error "LCD_COLOR16 is still undef ,please define it first"
+#ifndef LCD_COLOR24
+#error "LCD_COLOR24 is still undef ,please define it first"
 #endif
-#define LCD_BPP		LCD_COLOR16
+#define LCD_BPP		LCD_COLOR24
 
 /**********************************************************************
  * LCD config
  **********************************************************************
  */
 //timing
-#define  VBP	(13)	//Vertical back porch
-#define  VFP	(32)	//Vertical front porch
-#define  VSPW	(2)		//Vertical sync pulse width
-#define  HBP	(144)	//Horizontal back porch
-#define  HFP	(16)	//Horizontal front porch
-#define  HSPW	(10)	//Horizontal sync pulse width
+#define  VBP	(1+1)	//Vertical back porch
+#define  VFP	(1+1)	//Vertical front porch
+#define  VSPW	(9+1)		//Vertical sync pulse width
+#define  HBP	(1+1)	//Horizontal back porch
+#define  HFP	(1+1)	//Horizontal front porch
+#define  HSPW	(40+1)	//Horizontal sync pulse width
 
 #define REFRESH_FREQ	(70)
 /**********************************************************************/
-#if LCD_BPP == LCD_COLOR16
-#define  BITS_PER_PIXEL		16
-#define  BYTES_PER_PIXEL       2
-#else //#elif LCD_BPP == LCD_COLOR32
+#if LCD_BPP == LCD_COLOR24
 #define  BITS_PER_PIXEL		24
 #define  BYTES_PER_PIXEL       4
+#else //#elif LCD_BPP == LCD_COLOR16
+#define  BITS_PER_PIXEL		16
+#define  BYTES_PER_PIXEL       2
 #endif
 
-#define  LCD_WIDTH				(640)
-#define  LCD_HEIGHT				(480)
+#define  LCD_WIDTH				(480)
+#define  LCD_HEIGHT				(272)
 
 #define  VIRT_FB_WIDTH_MAX		LCD_WIDTH
 #define  VIRT_FB_HEIGHT_MAX	LCD_HEIGHT

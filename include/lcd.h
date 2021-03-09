@@ -17,6 +17,15 @@
 #include <asm/byteorder.h>
 #endif
 
+#define LCD_MONOCHROME	0
+#define LCD_COLOR2	1
+#define LCD_COLOR4	2
+#define LCD_COLOR8	3
+#define LCD_COLOR16	4
+#define LCD_COLOR24	5
+#define LCD_COLOR32	6
+#include <asm/arch/lcd.h>
+
 int bmp_display(ulong addr, int x, int y);
 struct bmp_image *gunzip_bmp(unsigned long addr, unsigned long *lenp,
 			     void **alloc_addr);
