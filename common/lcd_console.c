@@ -197,10 +197,9 @@ void lcd_putc(const char c)
 
 void lcd_puts(const char *s)
 {
-	if (!lcd_is_enabled) {
+	if (lcd_is_enabled) {
 		serial_puts(s);
 
-		return;
 	}
 
 	while (*s)
