@@ -241,6 +241,84 @@ void lcd_clear(void)
 	lcd_sync();
 }
 
+/* gpio controller */
+#define GPECON  (*((volatile unsigned long *)0x7F008080))
+#define GPEDAT  (*((volatile unsigned long *)0x7F008084))
+#define GPFCON  (*((volatile unsigned long *)0x7F0080A0))
+#define GPFDAT  (*((volatile unsigned long *)0x7F0080A4))
+#define GPICON  (*((volatile unsigned long *)0x7F008100))
+#define GPJCON  (*((volatile unsigned long *)0x7F008120))
+
+// GPACONSLP 0x7F00800C R/W Port A Sleep mode Configuration Register 0x0
+#define MIFPCON     	(*((volatile unsigned long *)0x7410800C))
+// SPCON 0x7F0081A0 R/W Special Port Configuration Register 0xBFC11500
+#define SPCON         	(*((volatile unsigned long *)0x7F0081A0))
+
+/* display controller */
+#define VIDCON0      	(*((volatile unsigned long *)0x77100000))
+#define VIDCON1      	(*((volatile unsigned long *)0x77100004))
+#define VIDTCON0     	(*((volatile unsigned long *)0x77100010))
+#define VIDTCON1     	(*((volatile unsigned long *)0x77100014))
+#define VIDTCON2     	(*((volatile unsigned long *)0x77100018))
+#define WINCON0      	(*((volatile unsigned long *)0x77100020))
+#define VIDOSD0A      	(*((volatile unsigned long *)0x77100040))
+#define VIDOSD0B      	(*((volatile unsigned long *)0x77100044))
+#define VIDOSD0C      	(*((volatile unsigned long *)0x77100048))
+#define VIDW00ADD0B0   	(*((volatile unsigned long *)0x771000A0))
+#define VIDW00ADD1B0  	(*((volatile unsigned long *)0x771000D0))
+#define VIDW00ADD2      (*((volatile unsigned long *)0x77100100))
+
+
+#define put_s(x) printk(x);
+#define put_h(y) printk("0x%08x\n",y);
+
+static void display_lcd_config(){
+
+	put_s("LCD CONFIG START\n\r");
+	put_s("GPECON\n\r");
+	put_h(GPECON);
+	put_s("GPEDAT\n\r");
+	put_h(GPEDAT);
+	put_s("GPFCON\n\r");
+	put_h(GPFCON);
+	put_s("GPFDAT\n\r");
+	put_h(GPFDAT);
+	put_s("GPICON\n\r");
+	put_h(GPICON);
+	put_s("GPJCON\n\r");
+	put_h(GPJCON);
+	put_s("MIFPCON\n\r");
+	put_h(MIFPCON);
+	put_s("SPCON\n\r");
+	put_h(SPCON);
+	put_s("VIDCON0\n\r");
+	put_h(VIDCON0);
+	put_s("VIDCON1\n\r");
+	put_h(VIDCON1);
+	put_s("VIDTCON0\n\r");
+	put_h(VIDTCON0);
+	put_s("VIDTCON1\n\r");
+	put_h(VIDTCON1);
+	put_s("VIDTCON2\n\r");
+	put_h(VIDTCON2);
+	put_s("WINCON0\n\r");
+	put_h(WINCON0);
+	put_s("VIDOSD0A\n\r");
+	put_h(VIDOSD0A);
+	put_s("VIDOSD0B\n\r");
+	put_h(VIDOSD0B);
+	put_s("VIDOSD0C\n\r");
+	put_h(VIDOSD0C);
+	put_s("VIDW00ADD0B0\n\r");
+	put_h(VIDW00ADD0B0);
+	put_s("VIDW00ADD1B0\n\r");
+	put_h(VIDW00ADD1B0);
+	put_s("VIDW00ADD2\n\r");
+	put_h(VIDW00ADD2);
+	put_s("LCD CONFIG END\n\r");
+
+}
+
 static int lcd_init(void *lcdbase)
 {
 	debug("[LCD] Initializing LCD frambuffer at %p\n", lcdbase);
@@ -269,6 +347,9 @@ static int lcd_init(void *lcdbase)
 #else
 	lcd_set_row(1);	/* leave 1 blank line below logo */
 #endif
+
+	
+	display_lcd_config();
 
 	return 0;
 }
