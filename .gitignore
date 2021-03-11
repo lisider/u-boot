@@ -95,3 +95,7 @@ GTAGS
 
 # Python cache
 __pycache__
+
+
+log_build
+output/*
