@@ -173,6 +173,14 @@ int board_early_init_f(void)
 
 #endif
 
+#ifdef CONFIG_DRIVER_DM9000
+int board_eth_init(struct bd_info *bis)
+{
+	return dm9000_initialize(bis);
+
+}
+#endif
+
 #ifdef CONFIG_SPL_BUILD
 #include <asm/spl.h>
 #include <asm/arch/clock-regs.h>
