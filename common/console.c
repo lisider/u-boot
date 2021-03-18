@@ -927,7 +927,7 @@ done:
 	}
 #endif /* CONFIG_SYS_CONSOLE_ENV_OVERWRITE */
 
-	gd->flags |= GD_FLG_DEVINIT;	/* device initialization completed */
+	//gd->flags |= GD_FLG_DEVINIT;	/* device initialization completed */
 
 #if 0
 	/* If nothing usable installed, use only the initial console */
