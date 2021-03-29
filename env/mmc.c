@@ -55,7 +55,7 @@ static inline int mmc_offset_try_partition(const char *str, int copy, s64 *val)
 	return 0;
 }
 
-static inline s64 mmc_offset(int copy)
+static inline u64 mmc_offset(int copy)
 {
 	const struct {
 		const char *offset_redund;
@@ -66,7 +66,7 @@ static inline s64 mmc_offset(int copy)
 		.partition = "u-boot,mmc-env-partition",
 		.offset = "u-boot,mmc-env-offset",
 	};
-	s64 val = 0, defvalue;
+	u64 val = 0, defvalue;
 	const char *propname;
 	const char *str;
 	int err;
@@ -92,9 +92,9 @@ static inline s64 mmc_offset(int copy)
 	return fdtdec_get_config_int(gd->fdt_blob, propname, defvalue);
 }
 #else
-static inline s64 mmc_offset(int copy)
+static inline u64 mmc_offset(int copy)
 {
-	s64 offset = CONFIG_ENV_OFFSET;
+	u64 offset = CONFIG_ENV_OFFSET;
 
 #if defined(CONFIG_ENV_OFFSET_REDUND)
 	if (copy)
@@ -104,13 +104,16 @@ static inline s64 mmc_offset(int copy)
 }
 #endif
 
-__weak int mmc_get_env_addr(struct mmc *mmc, int copy, u32 *env_addr)
+__weak int mmc_get_env_addr(struct mmc *mmc, int copy, u64 *env_addr)
 {
-	s64 offset = mmc_offset(copy);
+	u64 offset = mmc_offset(copy);
 
 	if (offset < 0)
 		offset += mmc->capacity;
 
+	//offset = 62409678*512;
+	//offset-sctor = ALL - RESERVE - SIGN - BL1 - ENV
+	offset = 0x770979C00;
 	*env_addr = offset;
 
 	return 0;
@@ -172,7 +175,7 @@ static void fini_mmc_for_env(struct mmc *mmc)
 
 #if defined(CONFIG_CMD_SAVEENV) && !defined(CONFIG_SPL_BUILD)
 static inline int write_env(struct mmc *mmc, unsigned long size,
-			    unsigned long offset, const void *buffer)
+			    u64 offset, const void *buffer)
 {
 	uint blk_start, blk_cnt, n;
 	struct blk_desc *desc = mmc_get_blk_desc(mmc);
@@ -190,7 +193,7 @@ static int env_mmc_save(void)
 	ALLOC_CACHE_ALIGN_BUFFER(env_t, env_new, 1);
 	int dev = mmc_get_env_dev();
 	struct mmc *mmc = find_mmc_device(dev);
-	u32	offset;
+	u64	offset;
 	int	ret, copy = 0;
 	const char *errmsg;
 
@@ -282,7 +285,7 @@ static int env_mmc_erase(void)
 #endif /* CONFIG_CMD_SAVEENV && !CONFIG_SPL_BUILD */
 
 static inline int read_env(struct mmc *mmc, unsigned long size,
-			   unsigned long offset, const void *buffer)
+			   u64 offset, const void *buffer)
 {
 	uint blk_start, blk_cnt, n;
 	struct blk_desc *desc = mmc_get_blk_desc(mmc);
@@ -346,7 +349,7 @@ static int env_mmc_load(void)
 #if !defined(ENV_IS_EMBEDDED)
 	ALLOC_CACHE_ALIGN_BUFFER(char, buf, CONFIG_ENV_SIZE);
 	struct mmc *mmc;
-	u32 offset;
+	u64 offset;
 	int ret;
 	int dev = mmc_get_env_dev();
 	const char *errmsg;
