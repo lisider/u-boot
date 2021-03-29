@@ -24,7 +24,6 @@ SECTIONS
 		CPUDIR/start.o  (.text*)
 		board/samsung/ok6410a/lowlevel_init.o (.text*)  
 		board/samsung/ok6410a/bl2_mmc_copy.o (.text*)  
-		board/samsung/ok6410a/bl2_nand_copy.o (.text*)  
 	}
 
 	/* This needs to come before *(.text*) */
