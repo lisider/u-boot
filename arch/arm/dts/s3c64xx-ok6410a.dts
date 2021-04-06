@@ -14,7 +14,7 @@
 #include <asm/arch/movi.h>
 
 / {
-	model = "Samsung SMDK6410 based on S3C6410";
+	model = "Samsung OK6410A based on S3C6410";
 	compatible = "samsung,smdk6410", "samsung,s3c6410";
 
 	aliases {

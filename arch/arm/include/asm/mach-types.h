@@ -1609,6 +1609,7 @@
 #define MACH_TYPE_AT91SAM9G20EK        1624
 #define MACH_TYPE_STORCENTER           1625
 #define MACH_TYPE_SMDK6410             1626
+#define MACH_TYPE_OK6410A              1626
 #define MACH_TYPE_U300                 1627
 #define MACH_TYPE_U500                 1628
 #define MACH_TYPE_DS9260               1629

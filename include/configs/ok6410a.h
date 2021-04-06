@@ -81,7 +81,7 @@
 /*
  * Architecture magic and machine type
  */
-#define CONFIG_MACH_TYPE	MACH_TYPE_SMDK6410
+#define CONFIG_MACH_TYPE	MACH_TYPE_OK6410A
 #define UBOOT_MAGIC		(0x43090000 | MACH_TYPE)
 
 /* Power Management is enabled */
